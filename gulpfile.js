@@ -23,8 +23,8 @@ var paths = {
 };
 var output = {
     dir: "dest",
-    libs:"libs.js",
-    seajs:"sea-mods.js",
+    libs:"farman.libs.js",
+    seajs:"farman.sea-mods.js",
     main: "farman.js",
     mainmin: "farman.min.js"
 };
@@ -37,12 +37,12 @@ gulp.task('beakup', function(){
 });
 
 gulp.task('clean', [], function(cb){
-	return gulp.src('dest/*.js', {read: false})
+	return gulp.src(output.dir, {read: false})
     .pipe(clean());
 });
 
 gulp.task('jshint',['clean'], function() {
-  return gulp.src(paths)
+  return gulp.src(paths.seajs)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
@@ -66,18 +66,20 @@ gulp.task('sea-contact',['sea-dev'], function() {
     [output.dir, output.seajs].join("/")
   ];
   return gulp.src(src)
-    .pipe(transport())
     .pipe(concat(output.main))
     .pipe(gulp.dest(output.dir));
 });
 
 gulp.task('libs-uglify',['sea-contact'], function() {
-  return gulp.src(output.main)
+  var src = [
+    [output.dir, output.main].join("/"),
+  ];
+  return gulp.src(src)
     .pipe(uglify())
     .pipe(concat(output.mainmin))
     .pipe(gulp.dest(output.dir));
 });
 
-gulp.task("dev", ["sea-dev"]);
+gulp.task("dev", ["sea-contact"]);
 gulp.task("online", ["libs-uglify"]);
 gulp.task("default", ["jshint","libs-uglify"]);
