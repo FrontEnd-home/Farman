@@ -8,9 +8,8 @@
 	<script type="text/javascript" src="./dest/farman.js"></script>
 	<script type="text/javascript" src="./mods/routes.js"></script>
 	<script type="text/javascript">
-		seajs.use(["app","routes", "parser"], function(App, routes, Parser){
-			var parserInstance = Parser.newInstance([location, routes]);
-			this.Farman = App.newInstance([parserInstance]);
+		seajs.use(["app","routes"], function(App, routes, Parser){
+			this.Farman = App.newInstance([routes]);
 		});
 	</script>
 </body>

@@ -15,7 +15,7 @@ define("parser", [], function(require, exports, module) {
 		decode: function(url){
 			var hash = url.hash;
 			var pathname = url.pathname;
-			var routes = this.routes;
+			var routes = this.viewsRoutes;
 			var self = this;
 			routes.forEach(function(item){
 				if(item.type == "hash" 

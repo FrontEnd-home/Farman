@@ -4,12 +4,14 @@
  * @date 2015/01/08
  * @author farman(yuhongfei1001@163.com)  
  */
-define("app", [], function(require, exports, module) {
+define("app", ["parser"], function(require, exports, module) {
 	
+	var Parser = require("parser");
+
 	var App = Class.extend({
-		init: function( parser ) {
-			this.parser = parser;
-			this.view = parser.view;
+		init: function( routes ) {
+			this.parser = Parser.newInstance([location, routes]);
+			this.view = this.parser.view;
 			this.loadView(this.view);
 		},
 		obServer: function(){
