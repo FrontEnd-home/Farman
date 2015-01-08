@@ -12,10 +12,7 @@ var paths = {
         "src/libs/class.js"
     ],
     seajs: [
-        "src/mod/parser.js",
-        "src/mod/view.js",
-        "src/mod/storage.js",
-        "src/mod/model.js",
+        "src/mod/*",
         "src/app.js"
     ]
 };

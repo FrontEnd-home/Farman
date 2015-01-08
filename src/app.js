@@ -1,16 +1,24 @@
+/**
+ * @class app
+ * @desc 单页app类
+ * @date 2015/01/08
+ * @author farman(yuhongfei1001@163.com)  
+ */
 define("app", [], function(require, exports, module) {
 	
 	var App = Class.extend({
-		init: function(opt) {
-			this.defaultView = opt.view;
+		init: function( parser ) {
+			this.parser = parser;
+			this.view = parser.view;
+			this.loadView(this.view);
 		},
 		obServer: function(){
-			
+			$(window).on("hashchange", this.viewChange);
 		},
 		viewChange: function(){
 
 		},
-		loadView: function(){
+		loadView: function( view ){
 
 		},
 		forWard: function( page ){
@@ -19,5 +27,5 @@ define("app", [], function(require, exports, module) {
 		}
 	});
 
-	return App;
+	module.exports = App;
 });
