@@ -5,11 +5,13 @@
 	<title>single page application</title>
 </head>
 <body>
+	<script type="text/javascript" src="./dest/farman.js"></script>
+	<script type="text/javascript" src="./mods/routes.js"></script>
 	<script type="text/javascript">
-		var currentState = history.state;
-		console.log(11)
-		history.pushState(currentState, "", "1.html");
-		console.log(22)
+		seajs.use(["app","routes", "parser"], function(App, routes, Parser){
+			var parserInstance = Parser.newInstance([location, routes]);
+			this.Farman = App.newInstance([parserInstance]);
+		});
 	</script>
 </body>
 </html>

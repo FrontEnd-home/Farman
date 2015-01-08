@@ -9,16 +9,14 @@ var paths = {
     libs: [
         "src/libs/zepto.js",
         "src/libs/sea-debug.js",
-        "src/lib/Class.js"
+        "src/libs/class.js"
     ],
     seajs: [
-        "src/mod/routes.js",
         "src/mod/parser.js",
         "src/mod/view.js",
         "src/mod/storage.js",
         "src/mod/model.js",
-        "src/index.js",
-        "src/config.js"
+        "src/app.js"
     ]
 };
 var output = {
@@ -28,13 +26,6 @@ var output = {
     main: "farman.js",
     mainmin: "farman.min.js"
 };
-
-gulp.task('beakup', function(){
-    var now = new Date();
-    var date = [now.getFullYear(),"-",now.getMonth()+1,"-", now.getDay()," ", now.getHours(),":", now.getMinutes(),":", now.getSeconds()].join("");
-    return gulp.src("dest/*")
-    .pipe(gulp.dest("beakup/" + date));
-});
 
 gulp.task('clean', [], function(cb){
 	return gulp.src(output.dir, {read: false})
@@ -60,7 +51,7 @@ gulp.task('sea-dev',['libs-dev'], function() {
     .pipe(gulp.dest(output.dir));
 });
 
-gulp.task('sea-contact',['sea-dev'], function() {
+gulp.task('dev',['sea-dev'], function() {
   var src = [
     [output.dir, output.libs].join("/"),
     [output.dir, output.seajs].join("/")
@@ -70,7 +61,7 @@ gulp.task('sea-contact',['sea-dev'], function() {
     .pipe(gulp.dest(output.dir));
 });
 
-gulp.task('libs-uglify',['sea-contact'], function() {
+gulp.task('online',['dev'], function() {
   var src = [
     [output.dir, output.main].join("/"),
   ];
@@ -80,6 +71,4 @@ gulp.task('libs-uglify',['sea-contact'], function() {
     .pipe(gulp.dest(output.dir));
 });
 
-gulp.task("dev", ["sea-contact"]);
-gulp.task("online", ["libs-uglify"]);
-gulp.task("default", ["jshint","libs-uglify"]);
+gulp.task("default", ["jshint","online"]);
