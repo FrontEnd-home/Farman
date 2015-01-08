@@ -1,6 +1,5 @@
 define("routes", [], function(require, exports, module) {
 	//@see https://github.com/FrontEnd-home/wiki/blob/master/frontend.md
-
 	var routes = [{
 			name: "list",
 			type: "path",

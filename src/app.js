@@ -11,17 +11,29 @@ define("app", ["parser"], function(require, exports, module) {
 	var App = Class.extend({
 		init: function( routes ) {
 			this.parser = Parser.newInstance([location, routes]);
-			this.view = this.parser.view;
-			this.loadView(this.view);
+			this.updateView();
 		},
 		obServer: function(){
 			$(window).on("hashchange", this.viewChange);
 		},
 		viewChange: function(){
-
+			this.parser.decode(location.hash, "hash");
+			this.updateView();
+		},
+		updateView: function(){
+			this.view = this.parser.view;
+			this.loadView( this.view );
 		},
 		loadView: function( view ){
-
+			if(!view){
+				console.error("have no this page!, please check routes!");
+				return;
+			}
+			try{
+				seajs.use(view);
+			}catch(e){
+				console.error("have no this view!");
+			}
 		},
 		forWard: function( page ){
 			var currentState = history.state;

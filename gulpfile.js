@@ -14,12 +14,18 @@ var paths = {
     seajs: [
         "src/mod/*",
         "src/app.js"
+    ],
+    page:[
+        "mods/routes.js",
+        "mods/common/*",
+        "mods/page/*"
     ]
 };
 var output = {
     dir: "dest",
     libs:"farman.libs.js",
     seajs:"farman.sea-mods.js",
+    pagejs:"farman.page.js",
     main: "farman.js",
     mainmin: "farman.min.js"
 };
@@ -48,7 +54,14 @@ gulp.task('sea-dev',['libs-dev'], function() {
     .pipe(gulp.dest(output.dir));
 });
 
-gulp.task('dev',['sea-dev'], function() {
+gulp.task('page-dev', function() {
+  return gulp.src(paths.page)
+    .pipe(transport())
+    .pipe(concat(output.pagejs))
+    .pipe(gulp.dest(output.dir));
+});
+
+gulp.task('dev',['sea-dev', 'page-dev'], function() {
   var src = [
     [output.dir, output.libs].join("/"),
     [output.dir, output.seajs].join("/")
