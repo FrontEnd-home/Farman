@@ -16,3 +16,5 @@ Thumbs.db
 .project
 .settings/
 _site/
+dest
+spm_modules

@@ -3,12 +3,31 @@ var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var transport = require("gulp-cmd-transport");
 var uglify = require('gulp-uglify');
-//var copyTo = require('gulp-copy');
 var clean = require('gulp-clean');
 
-var paths = [
-    "src/*"
-];
+var paths = {
+    libs: [
+        "src/libs/zepto.js",
+        "src/libs/sea-debug.js",
+        "src/lib/Class.js"
+    ],
+    seajs: [
+        "src/mod/routes.js",
+        "src/mod/parser.js",
+        "src/mod/view.js",
+        "src/mod/storage.js",
+        "src/mod/model.js",
+        "src/index.js",
+        "src/config.js"
+    ]
+};
+var output = {
+    dir: "dest",
+    libs:"libs.js",
+    seajs:"sea-mods.js",
+    main: "farman.js",
+    mainmin: "farman.min.js"
+};
 
 gulp.task('beakup', function(){
     var now = new Date();
@@ -28,14 +47,37 @@ gulp.task('jshint',['clean'], function() {
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('libs-uglify',[], function() {
-  return gulp.src(paths)
-    .pipe(transport())
-    .pipe(concat("libs.js"))
-    .pipe(gulp.dest("dest"));
-    .pipe(uglify())
-    .pipe(concat("libs.min.js"))
-    .pipe(gulp.dest('dest'));
+gulp.task('libs-dev',['clean'], function() {
+  return gulp.src(paths.libs)
+    .pipe(concat(output.libs))
+    .pipe(gulp.dest(output.dir));
 });
 
-gulp.task("default", ["beakup","jshint","libs-uglify"]);
+gulp.task('sea-dev',['libs-dev'], function() {
+  return gulp.src(paths.seajs)
+    .pipe(transport())
+    .pipe(concat(output.seajs))
+    .pipe(gulp.dest(output.dir));
+});
+
+gulp.task('sea-contact',['sea-dev'], function() {
+  var src = [
+    [output.dir, output.libs].join("/"),
+    [output.dir, output.seajs].join("/")
+  ];
+  return gulp.src(src)
+    .pipe(transport())
+    .pipe(concat(output.main))
+    .pipe(gulp.dest(output.dir));
+});
+
+gulp.task('libs-uglify',['sea-contact'], function() {
+  return gulp.src(output.main)
+    .pipe(uglify())
+    .pipe(concat(output.mainmin))
+    .pipe(gulp.dest(output.dir));
+});
+
+gulp.task("dev", ["sea-dev"]);
+gulp.task("online", ["libs-uglify"]);
+gulp.task("default", ["jshint","libs-uglify"]);
