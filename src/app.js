@@ -4,12 +4,15 @@
  * @date 2015/01/08
  * @author farman(yuhongfei1001@163.com)  
  */
-define("app", ["parser"], function(require, exports, module) {
+define("app", ["events","parser"], function(require, exports, module) {
 	
 	var Parser = require("parser");
+	var Events = require("events");
 
-	var App = Class.extend({
+	var App = Events.extend({
 		init: function( routes ) {
+			this._super();
+			
 			this.parser = Parser.newInstance([location, routes]);
 			this.updateView();
 		},
@@ -30,7 +33,8 @@ define("app", ["parser"], function(require, exports, module) {
 				return;
 			}
 			try{
-				seajs.use(view);
+				this.currentView = require(view).newInstance();
+				this.currentView.fire("show");
 			}catch(e){
 				console.error("have no this view!");
 			}

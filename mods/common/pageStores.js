@@ -1,4 +1,4 @@
-define("pageStorage", ["storage"], function(require, exports, module) {
+define("pageStores", ["storage"], function(require, exports, module) {
 
 	var Storage = require("storage");
 

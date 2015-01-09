@@ -6,9 +6,9 @@
 </head>
 <body>
 	<script type="text/javascript" src="./dest/farman.js"></script>
-	<script type="text/javascript" src="./mods/routes.js"></script>
+	<script type="text/javascript" src="./dest/farman.page.js"></script>
 	<script type="text/javascript">
-		seajs.use(["app","routes"], function(App, routes, Parser){
+		seajs.use(["app","routes"], function(App, routes){
 			this.Farman = App.newInstance([routes]);
 		});
 	</script>
