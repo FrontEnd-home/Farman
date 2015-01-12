@@ -5,27 +5,20 @@
  * @author farman(yuhongfei1001@163.com)  
  */
 define("parser", [], function(require, exports, module) {
-	
+
 	var Parser = Class.extend({
-		init: function(location, viewsRoutes){
+		init: function(location, viewsRoutes, defaultView){
 			this.viewsRoutes = viewsRoutes;
-			this.decode(location);
+			this.view = defaultView || "index";
+			this.decode(location.pathname);
 			return this;
 		},
-		decode: function(url){
-			var hash = url.hash;
-			var pathname = url.pathname;
+		decode: function(url, pagetype){
+			if(!url.length) return;
 			var routes = this.viewsRoutes;
 			var self = this;
 			routes.forEach(function(item){
-				if(item.type == "hash" 
-				&& item.match.test(hash)
-				){
-					 self.view = item.name;
-				}
-
-				if(item.type == "path" 
-				&& item.match.test(pathname)
+				if(item.match.test(url)
 				){
 					 self.view = item.name;
 				}
