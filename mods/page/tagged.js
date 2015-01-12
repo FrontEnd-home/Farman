@@ -1,17 +1,17 @@
-define("list", ["view","pageModels","pageStores"], function(require, exports, module){
+define("tagged", ["view","pageModels","pageStores"], function(require, exports, module){
 	var View = require("view");
 
 	var listController = View.extend({
 		init: function(){
 			this._super();
 
-			this.$el.html("list");
+			this.$el.html("tagged");
 		},
 		onShow: function(){
-			console.log("list.show!");
+			console.log("tagged.show!");
 		},
 		onHide: function(){
-			console.log("list.hide!");
+			console.log("tagged.hide!");
 		}
 	});
 

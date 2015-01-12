@@ -1,17 +1,16 @@
-define("list", ["view","pageModels","pageStores"], function(require, exports, module){
+define("search", ["view","pageModels","pageStores"], function(require, exports, module){
 	var View = require("view");
 
 	var listController = View.extend({
 		init: function(){
 			this._super();
-
-			this.$el.html("list");
+			this.$el.html("search");
 		},
 		onShow: function(){
-			console.log("list.show!");
+			console.log("search.show!");
 		},
 		onHide: function(){
-			console.log("list.hide!");
+			console.log("search.hide!");
 		}
 	});
 

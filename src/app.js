@@ -10,17 +10,31 @@ define("app", ["events","parser"], function(require, exports, module) {
 	var Events = require("events");
 
 	var App = Events.extend({
-		init: function( routes ) {
+		init: function( routes, defaultView ) {
 			this._super();
 			
-			this.parser = Parser.newInstance([location, routes]);
+			this.root = $("#contentView");
+			this.views = {};
+			this.viewList = [];
+			this.currentView = Events.newInstance();
+			this.parser = Parser.newInstance([location, routes, defaultView]);
 			this.updateView();
+			this.obServer();
 		},
 		obServer: function(){
-			$(window).on("hashchange", this.viewChange);
+			var self = this;
+			$(document).delegate("a","click", function(e){
+				var href = $(e.target).attr("href");
+				if(href){
+					e.preventDefault();
+					self.forWard(href);
+					self.viewChange(href);
+				}
+			});
 		},
-		viewChange: function(){
-			this.parser.decode(location.hash, "hash");
+		viewChange: function(href){
+			var path = href || location.pathname;
+			this.parser.decode(path, "path");
 			this.updateView();
 		},
 		updateView: function(){
@@ -32,12 +46,20 @@ define("app", ["events","parser"], function(require, exports, module) {
 				console.error("have no this page!, please check routes!");
 				return;
 			}
-			try{
-				this.currentView = require(view).newInstance();
-				this.currentView.fire("show");
-			}catch(e){
-				console.error("have no this view!");
+			this.currentView.fire("hide");
+			if(this.views[view]){
+				this.currentView = this.views[view];
+			} else{
+				try{
+					this.currentView = require(view).newInstance();
+					this.root.append( this.currentView.$el );
+					this.views[view] = this.currentView;
+					this.viewList.push(this.currentView);
+				}catch(e){
+					console.error("have no this view!");
+				}
 			}
+			this.currentView.fire("show");
 		},
 		forWard: function( page ){
 			var currentState = history.state;

@@ -5,11 +5,20 @@
 	<title>single page application</title>
 </head>
 <body>
-	<script type="text/javascript" src="./dest/farman.js"></script>
+	<a href="/index">index</a>
+	<a href="/list/js">list</a>
+	<a href="/tagged/js">taged</a>
+	<a href="/q/ss">search</a>
+	<a href="/golbal_objects/ss">golbal_objects</a>
+	<div id="contentView">
+		
+	</div>
+	<script type="text/javascript" src="./dest/farman.libs.js"></script>
+	<script type="text/javascript" src="./dest/farman.sea-mods.js"></script>
 	<script type="text/javascript" src="./dest/farman.page.js"></script>
 	<script type="text/javascript">
 		seajs.use(["app","routes"], function(App, routes){
-			this.Farman = App.newInstance([routes]);
+			this.Farman = App.newInstance([routes], "index");
 		});
 	</script>
 </body>

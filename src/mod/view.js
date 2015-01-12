@@ -11,8 +11,16 @@ define("view", ["events"], function(require, exports, module) {
 		init: function() {
 			this._super();
 
-			this.on("show", this.onShow);
-			this.on("hide", this.onHide);
+			var self = this;
+			this.$el = $("<div class='viewport'></div>");
+			this.on("show", function(){
+				self.$el.show();
+				self.onShow();	
+			});
+			this.on("hide", function(){
+				self.$el.hide();
+				self.onHide();
+			});
 		},
 		onShow: function(){
 			console.log("show");
