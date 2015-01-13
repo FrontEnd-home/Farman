@@ -8,23 +8,23 @@ define("events", function(require, exports, module) {
 
 	var Events = Class.extend({
 		init: function() {
-			this.__events = {};
+			this.__listeners = {};
 		},
 		on: function(name, handler) {
-			if (this.__events[name] && this.__events[name].length) {
-				this.__events.push(handler);
+			if (this.__listeners[name] && this.__listeners[name].length) {
+				this.__listeners.push(handler);
 			} else {
-				this.__events[name] = [handler];
+				this.__listeners[name] = [handler];
 			}
 		},
 		off: function(name) {
-			if (this.__events[name] && this.__events[name].length) {
-				this.__events[name] = [];
+			if (this.__listeners[name] && this.__listeners[name].length) {
+				this.__listeners[name] = [];
 			}
 		},
 		fire: function(name, data) {
-			if (this.__events[name] && this.__events[name].length) {
-				var handlers = this.__events[name];
+			if (this.__listeners[name] && this.__listeners[name].length) {
+				var handlers = this.__listeners[name];
 				handlers.forEach(function(handler) {
 					handler.call(null, data);
 				});
