@@ -1,4 +1,4 @@
-define("pageModels", ["model"], function(require, exports, module){
+define(function(require, exports, module){
 	var model = require("model");
 	var host = "http://localhost";
 	//创建模型的基础方法.

@@ -4,7 +4,7 @@
  * @date 2015/01/08
  * @author farman(yuhongfei1001@163.com)
  */
-define("view", ["events"], function(require, exports, module) {
+define(function(require, exports, module) {
 	var Events = require("events");
 
 	var View = Events.extend({

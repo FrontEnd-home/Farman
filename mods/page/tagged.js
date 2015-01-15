@@ -1,4 +1,4 @@
-define("tagged", ["view","pageModels","pageStores"], function(require, exports, module){
+define(function(require, exports, module){
 	var View = require("view");
 
 	var listController = View.extend({

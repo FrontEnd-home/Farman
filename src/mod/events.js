@@ -4,7 +4,7 @@
  * @date 2015/01/09
  * @author farman(yuhongfei1001@163.com)
  */
-define("events", function(require, exports, module) {
+define(function(require, exports, module) {
 
 	var Events = Class.extend({
 		init: function() {

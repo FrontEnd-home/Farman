@@ -4,7 +4,7 @@
  * @date 2015/01/08
  * @author farman(yuhongfei1001@163.com)  
  */
-define("app", ["events","parser"], function(require, exports, module) {
+define(function(require, exports, module) {
 	
 	var Parser = require("parser");
 	var Events = require("events");

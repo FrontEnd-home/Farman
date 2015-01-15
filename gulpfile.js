@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
-var transport = require("gulp-cmd-transport");
+var transport = require("gulp-seajs-transport");
 var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
 
@@ -13,7 +13,8 @@ var paths = {
     ],
     seajs: [
         "src/mod/*",
-        "src/app.js"
+        "src/app.js",
+        "src/config.js"
     ],
     page:[
         "mods/routes.js",
@@ -54,7 +55,7 @@ gulp.task('sea-dev',['libs-dev'], function() {
     .pipe(gulp.dest(output.dir));
 });
 
-gulp.task('page-dev', function() {
+gulp.task('page-dev', ['clean'], function() {
   return gulp.src(paths.page)
     .pipe(transport())
     .pipe(concat(output.pagejs))

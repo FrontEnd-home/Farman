@@ -4,7 +4,7 @@
  * @date 2015/01/08
  * @author farman(yuhongfei1001@163.com)
  */
-define("storage", [], function(require, exports, module) {
+define(function(require, exports, module) {
 
 	var Storage = Class.extend({
 		init: function(key, value, lifeTime) {
