@@ -4,10 +4,9 @@
  * @date 2015/01/08
  * @author farman(yuhongfei1001@163.com)  
  */
-define("model", ["ajax", "commonStorage"], function(require, exports, module) {
+define(function(require, exports, module) {
 	
 	var cAjax = require("ajax");
-	var commonStorage = require("commonStorage");
 
 	var AbstractModel = Class.extend({
 		init: function(options) {
@@ -107,13 +106,6 @@ define("model", ["ajax", "commonStorage"], function(require, exports, module) {
 		 * @return {Object} 返回一个Object
 		 */
 		getParam: function() {
-			if (this.usehead) {
-				var headParam = commonStorage.head;
-				headParam = headParam.get();
-				if (headParam) {
-					return _.extend(headParam, this.param);
-				}
-			}
 			return this.param;
 		},
 

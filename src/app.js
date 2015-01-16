@@ -4,10 +4,11 @@
  * @date 2015/01/08
  * @author farman(yuhongfei1001@163.com)  
  */
-define("app", ["events","parser"], function(require, exports, module) {
+define(function(require, exports, module) {
 	
 	var Parser = require("parser");
 	var Events = require("events");
+	var SideBar = require("sideBar");
 
 	var App = Events.extend({
 		init: function( routes, defaultView ) {
@@ -17,19 +18,39 @@ define("app", ["events","parser"], function(require, exports, module) {
 			this.views = {};
 			this.viewList = [];
 			this.currentView = Events.newInstance();
+			this.sideBarView = SideBar.newInstance([this, {
+				"javascript":["Date","Json","String","Number"],
+				"node":["fs","http","net"]
+			}]);
+			this.root.append( this.sideBarView.$el );
+
 			this.parser = Parser.newInstance([location, routes, defaultView]);
 			this.updateView();
 			this.obServer();
 		},
 		obServer: function(){
+			this.registerEvent();
 			var self = this;
-			$(document).delegate("a","click", function(e){
+			this.root.delegate("a","click", function(e){
 				var href = $(e.target).attr("href");
 				if(href){
 					e.preventDefault();
 					self.forWard(href);
 					self.viewChange(href);
 				}
+			});
+		},
+		registerEvent: function(){
+			var self = this;
+			this.on("OpenClass", function(data){
+				self.currentView.fire("OpenClass",data);
+			});
+			this.on("OpenPage", function(data){
+				self.currentView.fire("OpenPage",data);
+			});
+
+			this.on("ClassChange", function(newClass){
+				self.sideBarView.fire("ClassChange", newClass);
 			});
 		},
 		viewChange: function(href){
@@ -51,7 +72,7 @@ define("app", ["events","parser"], function(require, exports, module) {
 				this.currentView = this.views[view];
 			} else{
 				try{
-					this.currentView = require(view).newInstance();
+					this.currentView = require(view).newInstance([this]);
 					this.root.append( this.currentView.$el );
 					this.views[view] = this.currentView;
 					this.viewList.push(this.currentView);

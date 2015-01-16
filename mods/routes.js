@@ -1,4 +1,4 @@
-define("routes", [], function(require, exports, module) {
+define(function(require, exports, module) {
 	//@see https://github.com/FrontEnd-home/wiki/blob/master/frontend.md
 	var routes = [{
 			name: "index",
