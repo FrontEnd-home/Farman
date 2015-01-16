@@ -12,9 +12,11 @@ var paths = {
         "src/libs/class.js"
     ],
     seajs: [
-        "src/mod/*",
+        "src/common/*",
+        "src/core/*",
+        "src/page/*",
         "src/app.js",
-        "src/config.js"
+    //    "src/config.js"
     ],
     page:[
         "mods/routes.js",
@@ -62,7 +64,7 @@ gulp.task('page-dev', ['clean'], function() {
     .pipe(gulp.dest(output.dir));
 });
 
-gulp.task('dev',['sea-dev', 'page-dev'], function() {
+gulp.task('dev',['clean','sea-dev','page-dev'], function() {
   var src = [
     [output.dir, output.libs].join("/"),
     [output.dir, output.seajs].join("/")
