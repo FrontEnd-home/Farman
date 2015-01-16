@@ -8,14 +8,16 @@ define(function(require, exports, module) {
 	var Events = require("events");
 
 	var View = Events.extend({
-		init: function() {
+		init: function(parent) {
 			this._super();
 
 			var self = this;
+			this.parent = parent;
+
 			this.$el = $("<div class='viewport'></div>");
 			this.on("show", function(){
 				self.$el.show();
-				self.onShow();	
+				self.onShow();
 			});
 			this.on("hide", function(){
 				self.$el.hide();

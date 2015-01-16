@@ -19,7 +19,6 @@
   "dependencies": {
     "gulp": "^3.8.10",
     "gulp-clean": "^0.3.1",
-    "gulp-cmd-transport": "^0.1.2",
     "gulp-concat": "^2.4.3",
     "gulp-jshint": "^1.9.0",
     "gulp-uglify": "^1.0.2"
